@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Online Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f2f2f2;
+}
+
+header{
+    background#0077cc;
+    color:black;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    padding:20px;
+}
+
+.product{
+    width:220px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 4px 8px rgba(0,0,0,.2);
+    padding:15px;
+    text-align:center;
+}
+
+.product img{
+    width:180px;
+    height:180px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+.product h3{
+    margin:10px 0;
+}
+
+.product p{
+    color:green;
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+button{
+    padding:10px 20px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#218838;
+}
+
+.cart{
+    width:400px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 8px rgba(0,0,0,.2);
+}
+
+.cart ul{
+    list-style:none;
+}
+
+.cart li{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+}
+
+.remove{
+    background:red;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>🛒 My Online Store</h1>
+<h2>Cart Items: <span id="count">0</span></h2>
+</header>
+
+<div class="container" id="products"></div>
+
+<div class="cart">
+<h2>Shopping Cart</h2>
+<ul id="cartList"></ul>
+<h3>Total: ₹<span id="total">0</span></h3>
+</div>
+
+<script>
+
+const products=[
+{
+name:"Shoes",
+price:1000,
+image:"https://img.joomcdn.net/71bb4859e8e46616906ddf7acf1b86dbcb657f79_1024_1024.jpeg"
+},
+{
+name:"Watch",
+price:2500,
+image:"https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw78222037/images/Fastrack/Catalog/FV60069WM01W_1.jpg?sw=360&sh=360"
+},
+{
+name:"Headphones",
+price:1800,
+image:"https://5.imimg.com/data5/YI/WN/MY-16999644/head-phone.jpg"
+},
+{
+name:"Smart Phone",
+price:60000,
+image:"https://cdn.jiostore.online/v2/jmd-asp/jdprod/wrkr/products/pictures/item/free/original/google/494743048/1/svsJVTxlFL-oglSm98vth-Google-10A-Lavender-494743048-i-2.jpg"
+},
+{
+name:"Backpack",
+price:500,
+image:"https://i.etsystatic.com/21242261/r/il/5fdb54/4548810453/il_fullxfull.4548810453_d7u5.jpg"
+},
+{
+name:"Camera",
+price:45000,
+image:"https://i.redd.it/wxtxq02rdg6b1.jpg"
+},
+{
+name:"Bluetooth Speaker",
+price:2000,
+image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPzO2aUkPx4r1SIu1Q6_GPnQu-XQG-1F8Pow&s"
+}
+];
+
+let cart=[];
+
+const productsDiv=document.getElementById("products");
+const cartList=document.getElementById("cartList");
+const total=document.getElementById("total");
+const count=document.getElementById("count");
+
+products.forEach((item,index)=>{
+productsDiv.innerHTML+=`
+<div class="product">
+<img src="${item.image}" alt="${item.name}">
+<h3>${item.name}</h3>
+<p>₹${item.price}</p>
+<button onclick="addCart(${index})">Add to Cart</button>
+</div>
+`;
+});
+
+function addCart(index){
+cart.push(products[index]);
+updateCart();
+}
+
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+}
+
+function updateCart(){
+
+cartList.innerHTML="";
+let sum=0;
+
+cart.forEach((item,index)=>{
+sum+=item.price;
+
+cartList.innerHTML+=`
+<li>
+${item.name} - ₹${item.price}
+<button class="remove" onclick="removeItem(${index})">Remove</button>
+</li>
+`;
+});
+
+total.innerText=sum;
+count.innerText=cart.length;
+}
+
+</script>
+
+</body>
+</html>
